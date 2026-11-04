@@ -2,9 +2,9 @@
 
 OSTF Editor is a Max for Live device for viewing, comparing, merging, editing, and managing song data stored in the **Open Song Timeline Format (OSTF)**.
 
-It is designed for composers, songwriters, arrangers, and music producers who work with OSTF files across multiple devices or workflows and need a central editor for inspecting, correcting, comparing, and combining song data.
+It is designed for composers, songwriters, arrangers, and music producers who work with OSTF files across multiple devices or workflows and need a central editor for inspecting, correcting, comparing, combining, and organizing song data.
 
-**Current version: v1.0**
+**Current version: v2.0**
 
 Supports **OSTF 3.0–3.5**.
 
@@ -26,6 +26,7 @@ Open OSTF files in a timeline-based editor and inspect:
 - Melodies
 - Lyrics
 - Arrangement tracks
+- Performance tracks
 - Drum events
 - Mixed pitched/drum tracks
 - OSTF metadata
@@ -47,6 +48,7 @@ You can compare:
 - Melody
 - Lyrics
 - Arrangement tracks
+- Performance tracks
 - Key maps
 - Note data
 - OSTF 3.5 note states
@@ -71,6 +73,20 @@ Supported merge workflows include:
 - Lyrics-linked melody material
 
 The editor attempts to preserve existing OSTF relationships instead of flattening the song into plain MIDI data.
+
+---
+
+## Performance Track Reordering
+
+OSTF Editor v2.0 improves management of Performance Tracks.
+
+Tracks can be reordered directly by dragging them in the Performance Tracks list.
+
+The reorder system uses direct row movement rather than a separate insertion-line workflow, making it easier to move tracks across multiple positions.
+
+This is especially useful when organizing larger OSTF arrangements containing multiple instrumental, drum, and performance tracks.
+
+The visual order is reflected in the resulting OSTF track order when the document is saved.
 
 ---
 
@@ -102,7 +118,7 @@ OSTF Editor prevents unsafe partial copies when a vocal unit also references not
 
 ## OSTF 3.5 Support
 
-OSTF Editor v1.0 supports the standard OSTF 3.5 note-state features, including:
+OSTF Editor v2.0 supports the standard OSTF 3.5 note-state features, including:
 
 - `enabled`
 - `releaseVelocity`
@@ -179,7 +195,9 @@ without replacing:
 - Lyrics
 - Arrangement data
 
-PPQ conversion must be exact. OSTF Editor does not silently round key-change positions.
+PPQ conversion must be exact.
+
+OSTF Editor does not silently round key-change positions.
 
 ---
 
@@ -231,8 +249,9 @@ Examples include:
 - Key Map replacement
 - OSTF migration
 - Track adoption
+- Track reordering
 
-Operations are grouped so that a single logical merge can usually be undone as one action.
+Operations are grouped so that a single logical edit can usually be undone as one action.
 
 ---
 
@@ -252,7 +271,12 @@ The editor can create a new MIDI clip in:
 - Session View
 - Arrangement View
 
-OSTF 3.5 note information is used where supported by Live, including probability, velocity deviation, release velocity, and enabled/mute state.
+OSTF 3.5 note information is used where supported by Live, including:
+
+- Probability
+- Velocity deviation
+- Release velocity
+- Enabled / mute state
 
 The original OSTF document is not modified simply by sending notes to Live.
 
@@ -289,6 +313,7 @@ Important goals include:
 - Avoid silently inventing metadata
 - Avoid silently rounding timing data
 - Avoid changing unrelated song data during merge
+- Preserve unrelated track data when reordering or adopting tracks
 
 Files containing numerical values that cannot be represented safely may be opened in a protected mode instead of being rewritten incorrectly.
 
@@ -315,9 +340,11 @@ A common OSTF Editor workflow is:
 
 8. Apply the changes.
 
-9. Review the complete song.
+9. Reorder Performance Tracks if necessary.
 
-10. Save the updated OSTF file.
+10. Review the complete song.
+
+11. Save the updated OSTF file.
 ```
 
 This makes OSTF Editor particularly useful when combining results from multiple OSTF-compatible Max for Live devices.
@@ -326,18 +353,22 @@ This makes OSTF Editor particularly useful when combining results from multiple 
 
 ## Intended Role in the OSTF Workflow
 
-OSTF Editor is designed primarily as a **comparison, correction, merge, and management tool**.
+OSTF Editor is designed primarily as a **comparison, correction, merge, organization, and management tool**.
 
 Specialized OSTF devices can create their own musical material, while OSTF Editor can be used to combine and refine those outputs into a single song file.
 
 Examples may include:
 
 ```text
-OSTF Chord Arranger
+OSTF Composer
         ↓
 OSTF Song Writer
         ↓
 OSTF Drum Arranger
+        ↓
+OSTF Bass Arranger
+        ↓
+OSTF Sequence Arranger
         ↓
 Other OSTF-compatible devices
         ↓
@@ -346,13 +377,17 @@ OSTF Editor
 Combined / corrected OSTF song
 ```
 
+OSTF Editor is not intended to replace specialized composition or arrangement devices.
+
+Its role is to provide a central place for reviewing and managing the resulting OSTF song data.
+
 ---
 
-## What v1.0 Does Not Try to Do
+## What v2.0 Does Not Try to Do
 
 Some OSTF data can be loaded and preserved even when OSTF Editor does not yet provide a dedicated authoring interface for it.
 
-v1.0 does not attempt to become a full generation engine.
+v2.0 does not attempt to become a full generation engine.
 
 Examples of functionality intentionally left for future development include:
 
@@ -362,7 +397,7 @@ Examples of functionality intentionally left for future development include:
 - Full localization authoring
 - Full presentation-style authoring
 - Replacing or appending notes inside an existing Live MIDI clip
-- OSTF 4 event editing
+- Full OSTF 4 event editing
 
 OSTF Editor prefers to preserve unsupported standard data rather than replace it with proprietary alternatives.
 
@@ -370,11 +405,11 @@ OSTF Editor prefers to preserve unsupported standard data rather than replace it
 
 ## OSTF 4 and MIDI-Style Events
 
-Control Change, Program Change, Pitch Bend, Aftertouch, and MPE-style event data are outside the scope of OSTF 3.5.
+Control Change, Program Change, Pitch Bend, Aftertouch, and other MIDI-style performance-event data are outside the scope of OSTF 3.5.
 
-OSTF Editor v1.0 therefore does not introduce proprietary extensions to simulate these features.
+OSTF Editor v2.0 does not introduce proprietary OSTF 3.5 extensions to simulate these features.
 
-Support can be added when the corresponding OSTF standard defines them.
+Future support can be added using the corresponding standard OSTF structures when those structures are supported by the editor.
 
 ---
 
@@ -387,18 +422,20 @@ Support can be added when the corresponding OSTF standard defines them.
 The device is distributed as:
 
 ```text
-OSTF_Editor_v1.0.amxd
+OSTF_Editor_v2.0.amxd
 ```
 
 ---
 
 ## Installation
 
-1. Download `OSTF_Editor_v1.0.amxd`.
+1. Download `OSTF_Editor_v2.0.amxd`.
 2. Copy it to your preferred Max for Live device folder.
 3. Open Ableton Live.
 4. Drag OSTF Editor onto a track.
 5. Open an OSTF file from the device.
+
+No additional installation is required for the device itself.
 
 ---
 
@@ -406,16 +443,41 @@ OSTF_Editor_v1.0.amxd
 
 OSTF Editor is built around the Open Song Timeline Format.
 
-OSTF repositories:
+OSTF repository:
 
-- OSTF 3.5  
-  https://github.com/yoh-nak/Open-Song-Timeline-Format-3.5
+### OSTF 3.5
+
+https://github.com/yoh-nak/Open-Song-Timeline-Format-3.5
 
 Earlier OSTF versions are also supported for compatibility.
 
 ---
 
-## Version
+## Version History
+
+### OSTF Editor v2.0
+
+Major editor and workflow update.
+
+Highlights:
+
+- OSTF 3.0–3.5 support
+- Visual two-file comparison
+- Visual Merge
+- Melody and vocal-link aware replacement
+- Arrangement and drum editing
+- Performance Track management
+- Improved drag-and-drop Performance Track reordering
+- Stable multi-position track movement
+- OSTF 3.5 note-state support
+- Fixed-trigger handling
+- High-PPQ timing preservation
+- Key Map merge
+- OSTF 3.4 → 3.5 migration
+- Undo / Redo
+- Send to Ableton Live
+- Backward-compatible OSTF saving
+- Improved editor workflow and UI behavior
 
 ### OSTF Editor v1.0
 
