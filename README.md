@@ -1,231 +1,90 @@
 # OSTF Editor for Max for Live
 
-**Version 2.1 — Official Release**
+**Version 2.2 — Official Release**  
+**Open Song Timeline Format (OSTF) 3.0–4.2 compatibility**
 
-OSTF Editor is a free Max for Live device for viewing, comparing, merging, editing, organizing, and managing song data stored in the **Open Song Timeline Format (OSTF)**.
+OSTF Editor is a free Max for Live device for **viewing, comparing, editing, merging, organizing, and preserving complete song documents** in the Open Song Timeline Format (OSTF).
 
-It is designed for composers, songwriters, arrangers, and music producers who work with OSTF files across multiple devices and need a central environment for inspecting, correcting, comparing, combining, and managing complete song data.
+It serves as the song-level integration point for OSTF Composer, Song Writer, Producer, Drum Arranger, Bass Arranger, Sequence Arranger, and other compatible tools. Specialized devices focus on writing or shaping individual parts; OSTF Editor focuses on the relationships among song structure, harmony, tracks, MIDI performances, melodies, lyrics, and metadata.
 
-Unlike specialized OSTF Arranger devices, which focus on generating and editing specific musical parts, OSTF Editor focuses on the complete song document and the relationships between its musical components.
+**Version 2.2 introduces OSTF 4.2 vocal-data compatibility, experimental vocal-software export, configurable timeline lanes, improved lyric/phonetic views, and a read-only vocal-expression viewer.** OSTF TEXT, two-file comparison, Visual Merge, and MIDI workflows remain available.
 
-**Current version: v2.1**
-
-**Supported OSTF document versions: 3.0–4.1**
-
-Support levels vary by format version. OSTF 4.1 includes schema-aware text import and protected data handling; full visual editing of every OSTF 4.1 structure is not yet available.
+> **Compatibility note:** Reading or preserving an OSTF field does not imply that every field can be edited or merged visually. Some newer documents or operations use protected handling to avoid data loss. Vocal-format exports are experimental and should be checked in the destination application.
 
 ---
 
-## What's New in v2.1
+## What's New in v2.2
 
-Version 2.1 introduces **OSTF TEXT**, allowing users to exchange OSTF song documents between compatible devices through text rather than relying exclusively on files.
+- **OSTF 4.2 support:** schema-aware reading, OSTF TEXT exchange, and preservation of supported vocal-specific data.
+- **Vocal Export:** experimental conversion to **Synthesizer V (`.svp`)**, **OpenUtau (`.ustx`)**, and **UtaFormatix (`.ufdata`)**.
+- **Lead and chorus parts:** export an explicitly assigned vocal Voice or recognized lead/harmony melody; supported multi-part exports retain separate vocal parts.
+- **Melody without lyrics:** export note pitches and timing with temporary placeholder syllables, without changing the original OSTF document.
+- **Global Timeline lanes:** choose which song-information lanes are visible without removing their underlying data.
+- **Three lyric views:** distinguish phrase text, pronunciation text, and note-aligned syllables. These are *different views of related OSTF information*, not three independent required lyric tracks.
+- **Lyric Phrasing:** clearer syllable placement and timing alongside the piano roll; display authored pronunciation/phonetics when present.
+- **Vocal Expression viewer:** inspect supported curves and timed events such as dynamics, breathiness, tension, brightness, voicing, pitch, vocal techniques, breaths, and phonemes.
+- **Layout improvements:** resizing of Global Timeline rows and clips, including Scale Contexts, and better handling of melody lanes.
+- **Loading feedback:** an indicator during supported file-open and drag-and-drop import workflows.
+- **Sound-selection interface:** access to internal GM preview choices and the existing Live MIDI workflow; this is not a multitrack VST hosting system.
+- **Release cleanup:** consolidated v2.2 version labels and metadata.
 
-### Highlights
-
-- New OSTF TEXT interface
-- View OSTF documents as formatted JSON text
-- Copy OSTF documents to the clipboard
-- Import OSTF documents from pasted text
-- Support text operations for File A and File B
-- Improve interoperability with OSTF Composer and Arranger devices
-- Add schema-aware validation for OSTF 4.0 and 4.1 text imports
-- Protect existing documents against invalid imports
-- Improve preservation of newer OSTF structures
-- Retain the existing visual editor, comparison, merge, and MIDI workflows
-- Update release metadata and version labels to v2.1
-
-OSTF TEXT provides an additional method of exchanging song data. Existing file-based OSTF workflows remain available.
+The v2.2 release incorporates the stability and UI fixes developed through the v2.2.1 RC5 candidate.
 
 ---
 
-## OSTF TEXT
+## Quick Start
 
-OSTF TEXT allows an OSTF document to be displayed, copied, and imported as structured text.
+1. Download `OSTF_Editor_v2.2.amxd`.
+2. Place it in your preferred Max for Live device folder.
+3. Open Ableton Live with Max for Live and load the device onto a compatible track. The current Editor workflow uses an audio-effect device on an audio track.
+4. Open the Editor window. Use **Open** to load a `.ostf` file, or **OSTF TEXT** to paste a document.
+5. Inspect the Global Timeline, Performance Tracks, Piano Roll, and Parameter area.
+6. For comparison, load another document into File A or File B, review differences, and merge supported content.
+7. Save the result as an OSTF document. Export MIDI or vocal-software formats separately when needed.
 
-This is particularly useful when exchanging song data between several OSTF-compatible Max for Live devices.
-
-### View OSTF Text
-
-Use the **OSTF TEXT** button in the Editor toolbar.
-
-The text interface displays the selected OSTF document as JSON.
-
-This allows users to inspect the underlying song data, including:
-
-- Song metadata
-- Song structure
-- Tempo and time signatures
-- Keys and scale contexts
-- Chord progressions
-- Arrangement information
-- Performance tracks
-- MIDI notes
-- MIDI performance events
-- Melody and lyric relationships
-- Other supported OSTF data
-
-The text interface provides access to the document representation without requiring a separate external text editor.
-
-### Copy OSTF
-
-Use **COPY OSTF** to copy the selected document to the clipboard.
-
-The copied data can be pasted into another OSTF-compatible device supporting OSTF TEXT import.
-
-Typical uses include:
-
-- Transferring song data from Composer to Editor
-- Exchanging data between Arranger devices
-- Inspecting generated OSTF data
-- Sharing an OSTF document without saving an intermediate file
-- Preparing data for external inspection or backup
-
-### Import OSTF
-
-Use **IMPORT OSTF** to paste a complete OSTF text document into the Editor.
-
-The import process parses and validates the supplied data before it replaces the target document.
-
-Invalid JSON or unsupported document structures are rejected rather than silently treated as valid OSTF data.
-
-The existing document is protected against unsuccessful imports.
-
-### File A and File B
-
-OSTF TEXT operations support the Editor's two-document workflow.
-
-Users can work with the documents assigned to File A and File B, allowing text-based document exchange to participate in the existing comparison workflow.
-
-Importing a document does not automatically merge it with another document.
-
-Comparison and merge remain separate operations.
-
-### Example Workflow
-
-1. Create a song in OSTF Composer.
-2. Open OSTF TEXT in Composer.
-3. Copy the OSTF document.
-4. Open OSTF Editor.
-5. Open OSTF TEXT.
-6. Import the copied document into File A.
-7. Import another OSTF document into File B.
-8. Compare the documents.
-9. Review differences and merge supported material.
-10. Save the resulting OSTF document.
-
-This workflow allows multiple OSTF devices to exchange their song data without requiring an intermediate file for every transfer.
+**Important:** `Save`/`Save As`, `Export MIDI File`, and `Vocal Export` are different operations. Vocal export does not replace the original OSTF document.
 
 ---
 
 ## OSTF Version Compatibility
 
-OSTF Editor supports documents from several generations of the Open Song Timeline Format.
-
-| OSTF Version | Support |
+| OSTF version | Scope in Editor v2.2 |
 |---|---|
-| 3.0 | Legacy compatibility |
-| 3.1 | Legacy compatibility |
-| 3.2 | Legacy compatibility |
-| 3.3 | Legacy compatibility |
-| 3.4 | Editing and migration compatibility |
-| 3.5 | Note-state and editing compatibility |
-| 4.0 | Extended MIDI and vocal-data recognition and preservation |
-| 4.1 | Schema-aware import, viewing, copying, and protected preservation |
+| 3.0–3.3 | Legacy document compatibility; available operations depend on the document |
+| 3.4 | Legacy editing and conservative 3.4-to-3.5 migration |
+| 3.5 | Note-state, song/track editing, comparison, and compatible merge workflows |
+| 4.0 | Recognition and preservation of extended MIDI events and multiple vocal/melody relationships |
+| 4.1 | Schema-aware handling and preservation of Track Directions and compatible song data |
+| 4.2 | Schema-aware import and protected preservation of phonetics, Voice Profiles, and Vocal Performances; vocal-software export |
 
-**Important:** Recognition, validation, and preservation do not necessarily mean that every field can be edited through the visual interface.
+The original OSTF version is retained unless an explicit, supported migration is performed. A newer version does **not** automatically make all older documents editable under that newer schema.
 
-Some newer document structures may be opened in a protected mode when the Editor cannot guarantee that an editing operation will preserve their relationships.
-
-Opening an older OSTF file does not automatically upgrade it to OSTF 4.0 or 4.1.
-
-The original document version is retained unless an explicit migration or conversion is performed.
+Some OSTF 4.x documents may be protected against editing operations that cannot guarantee preservation of references or newer structures. Full visual authoring and merging of every 4.2 field are **not** included.
 
 ---
 
-## OSTF 4.0 and 4.1 Support
+## OSTF TEXT — View, Copy, Import
 
-OSTF 4.0 expands the format beyond traditional note-oriented musical data.
+Select **OSTF TEXT** in the main toolbar to exchange a complete OSTF document as JSON text.
 
-OSTF Editor recognizes standard OSTF performance and vocal structures, including:
+- **View OSTF:** inspect the current selected document, including its song structure, harmony, tracks, notes, MIDI events, and lyrics.
+- **COPY OSTF:** copy the document for use in another compatible OSTF device.
+- **IMPORT OSTF:** paste text and validate it before replacing the selected document.
+- **File A / File B:** choose the destination or source within the two-document workspace.
 
-- MIDI channel information
-- MIDI bus and routing information
-- Control Change events
-- Program Change events
-- Pitch Bend events
-- Channel Pressure
-- Polyphonic Pressure
-- Multiple melody tracks
-- Multiple lyric and vocal relationships
-- Extended performance-event information
+Invalid JSON or unsupported structures are rejected instead of silently replacing a valid document. Imported text is **not automatically merged** with the other side.
 
-These structures are kept as standard OSTF data rather than converted into proprietary Editor-specific extensions.
-
-### OSTF 4.1
-
-Version 2.1 adds schema-aware OSTF 4.1 text handling.
-
-OSTF 4.1 introduces additional musical direction information, including Track Directions and performance-related constraints.
-
-The Editor can import, inspect, copy, and preserve supported OSTF 4.1 documents.
-
-However, complete visual authoring of OSTF 4.1 Track Directions and other new structures is not yet implemented.
-
-Operations that could damage unsupported data or relationships may be restricted.
-
-### Data Preservation
-
-OSTF Editor prioritizes safe round-trip preservation.
-
-Important principles include:
-
-- Preserve supported standard fields
-- Preserve unfamiliar fields whenever possible
-- Avoid deleting unrelated data
-- Avoid silently converting unsupported structures
-- Retain MIDI performance information
-- Retain vocal and melody relationships
-- Preserve exact timing where possible
-- Avoid automatic format upgrades
-- Protect documents that cannot be safely edited
-
-The Editor is intended to complement other OSTF devices rather than force their data into a simplified representation.
+**Example:** Copy from Composer → import into Editor File A → import an Arranger's OSTF into File B → compare → select supported changes → save the combined song.
 
 ---
 
-## Main Features
+## Visual Song Editor
 
-### Visual OSTF Editor
+### Global Timeline and Configurable Lanes
 
-Open OSTF files in a timeline-based editor.
+The Global Timeline displays song-level information against a common musical timeline. Its **Lanes** menu provides visibility checkboxes. Hiding a lane affects only the display, **not** the OSTF data.
 
-Supported song information includes:
-
-- Song structure
-- Tempo
-- Time signatures
-- Key changes
-- Scale contexts
-- Chords
-- Stored chord voicings
-- Multiple melodies
-- Lyrics and vocal relationships
-- Arrangement tracks
-- Performance tracks
-- Drum events
-- Mixed pitched/drum tracks
-- MIDI performance information
-- OSTF metadata
-
-Song information is displayed against a shared musical timeline.
-
-This makes it easier to understand how different musical parts relate to each other.
-
-### Global Timeline
-
-The Global Timeline provides a song-level overview.
-
-It includes information such as:
+Available views include:
 
 - Structure
 - Tempo
@@ -234,662 +93,292 @@ It includes information such as:
 - Scale Contexts
 - Chords
 - Chord Tones
+- Voicing Data
 - Display Lyrics
+- Pronunciation Lyrics
+- Vocal Lyrics
+- Main Melody / applicable melody lanes
 
-These elements can be inspected together rather than separately in specialized Arranger devices.
+**Chord Tones** represent the tones derived from the chord definition. **Voicing Data** is an optional concrete pitch snapshot associated with a chord; it is not an arrangement note sequence or a command to generate accompaniment.
 
-Editing availability depends on the OSTF document version and the supported operation.
+The three lyric lanes intentionally offer separate perspectives on related song data:
+
+- **Display Lyrics:** phrase-level written lyrics.
+- **Pronunciation Lyrics:** authored readings or pronunciation text where provided.
+- **Vocal Lyrics:** timed lyric units and syllables associated with melodic notes where alignments are available.
+
+These displays are retained for compatibility and inspection. Their presence does **not** mean any corresponding OSTF field has been deprecated. Hidden or empty lanes do not remove data.
+
+The Global Timeline can be resized; row and clip heights are adjusted within the supported layout. The visibility selection helps keep larger songs readable.
 
 ### Performance Tracks
 
-The Performance Tracks area provides an overview of the instrument and performance content stored in the OSTF document.
+Inspect multiple instrument, bass, drum, melodic, and mixed pitched/percussion parts on a shared timeline. Supported documents provide track selection, inspection, and drag-and-drop reordering.
 
-It supports workflows involving:
+Track operations and editability depend on the document's version and protected status. Reordering a supported editable document updates the saved OSTF track order.
 
-- Melodic instruments
-- Chord voicings
-- Bass parts
-- Drum and percussion tracks
-- Mixed performance material
-- Multiple melody parts
+### Piano Roll and Lyric Phrasing
 
-Tracks can be selected and inspected within the same song timeline.
+The Piano Roll shows note pitch, position, length, and supported note attributes for the selected part. Lyric Phrasing presents written syllables in relation to their musical timing and can display note-aligned labels near the notes.
 
-Supported documents also provide track-management operations, including reordering.
+- Authored lyrics, pronunciation, and phonetic information are kept distinct.
+- Where available, note/lyric alignments are used rather than guessed.
+- Unaligned lyric phrases may be shown separately instead of being attached to the wrong notes.
+- Melodies without assigned lyrics remain legitimate melodies and can still participate in vocal export.
 
-### Piano Roll
+### Parameters and Note Data
 
-The Piano Roll displays MIDI note information associated with the selected track.
+The Parameter area supports the inspection and, where available, editing of note and MIDI performance properties, including velocity, MIDI CC, Pitch Bend, Channel Aftertouch, Poly Aftertouch, and Program Change.
 
-This provides a visual representation of:
+OSTF note-state attributes include `enabled`, `releaseVelocity`, `probability`, `velocityDeviation`, `pitchRole`, and Phrase Instance `noteStateMode`.
 
-- Note positions
-- Note lengths
-- Pitch
-- Timing
-- Musical relationships
-- Supported note attributes
-
-The Piano Roll works alongside the timeline and track-management interfaces.
-
-### Parameter Editing
-
-The parameter area provides access to supported note attributes and processing operations.
-
-OSTF 3.5 note-state information includes:
-
-- `enabled`
-- `releaseVelocity`
-- `probability`
-- `velocityDeviation`
-- `pitchRole`
-- Phrase Instance `noteStateMode`
-
-These fields can be preserved through supported editing, comparison, merge, and save workflows.
+**Fixed triggers:** notes marked `pitchRole = fixedTrigger` are protected against ordinary musical transposition. For example, a +12-semitone transpose may move MIDI 64 to 76 while a keyswitch at MIDI 24 remains unchanged.
 
 ---
 
-## Compare Two OSTF Files
+## Vocal Expression Viewer
 
-OSTF Editor supports a two-document comparison workflow.
+OSTF 4.2 can carry optional vocal-specific expression data. In the lower Parameter area, select a vocal expression view to inspect authored information where it exists:
 
-Load one OSTF document into File A and another into File B.
+- **Continuous values/curves:** Dynamics, Breathiness, Tension, Brightness, Voicing, and Pitch Offset (cents).
+- **Timed events:** Vocal Techniques, Breath Events, and Phoneme Events.
 
-The two documents can be compared to identify differences in musical content and song organization.
+Curves are presented on a time axis; timed techniques, breaths, and phonemes can be shown as event lanes. The UI is deliberately **version-neutral** so that the names remain useful as OSTF evolves.
 
-Comparison areas include:
-
-- Song structure
-- Chord progressions
-- Melodies
-- Lyrics
-- Arrangement tracks
-- Performance tracks
-- Key maps
-- Note data
-- OSTF note states
-- Supported metadata and song structures
-
-This is useful when different OSTF devices have independently modified or generated material for the same song.
-
-The comparison interface helps identify what has changed before material is merged.
+**Read-only in v2.2:** the viewer does not author or synthesize vocal-expression data. If an older OSTF file has no authored expression information, the Editor reports that no data is available instead of inventing a curve. MIDI Velocity is a separate note parameter and should not be mistaken for Vocal Dynamics.
 
 ---
 
-## Visual Merge
+## Vocal Export — Synthesizer V, OpenUtau, UtaFormatix
 
-OSTF Editor provides a visual workflow for transferring selected material between OSTF documents.
+Vocal Export is available in the right-hand panel, near **Export MIDI File**. It converts selected melodic material to a singing-software interchange file.
 
-Supported workflows include:
+### Supported Target Formats
 
-- Selected note ranges
-- Complete tracks
-- Melody regions
-- Arrangement parts
-- Performance tracks
-- Drum material
-- Stored chord voicings
-- Key Map data
-- Lyrics-linked melody material
-
-The Editor attempts to preserve OSTF relationships rather than flattening all information into ordinary MIDI notes.
-
-Existing unrelated song data is preserved whenever possible.
-
-### Selective Integration
-
-A typical use case is combining the results of several specialized Arranger devices.
-
-For example:
-
-- OSTF Composer produces the harmony
-- OSTF Song Writer produces a melody
-- OSTF Drum Arranger produces drum patterns
-- OSTF Bass Arranger produces bass material
-- OSTF Sequence Arranger produces MIDI sequences
-
-OSTF Editor can be used to inspect and combine supported parts of these documents into a single OSTF song.
-
-Merge operations should be reviewed before application, especially when source and destination documents contain different structures or references.
-
----
-
-## Performance Track Reordering
-
-Performance Tracks can be reordered through drag-and-drop in supported editable documents.
-
-The track-reordering system supports direct row movement.
-
-It allows tracks to be repositioned across multiple locations without relying on separate insertion-line targets.
-
-This is useful in arrangements containing many instrument, drum, melody, and performance tracks.
-
-The resulting order is reflected in the OSTF document when saved.
-
----
-
-## Melody and Vocal-Lyrics Handling
-
-OSTF Editor supports workflows involving multiple melodies and vocal relationships.
-
-Examples include:
-
-- Main vocal
-- Secondary vocal
-- Harmony vocal
-- Backing vocal
-- Counter melody
-- Additional melodic parts
-
-Partial melody replacement requires special care because lyric units may reference specific notes.
-
-### Keep Destination Vocal Lyrics
-
-Replace supported musical information while retaining the existing destination lyrics.
-
-When note timing remains compatible, existing lyric relationships can be reconnected to replacement notes.
-
-### Notes Only
-
-Replace note material without automatically adopting source lyric relationships.
-
-This can be useful when note rhythm or note count changes.
-
-Affected lyric-note relationships may be disconnected while the lyric content remains in the document.
-
-### Adopt Source Vocal Lyrics
-
-Copy supported melody material together with its corresponding vocal relationships.
-
-Unsafe partial copies may be rejected when a vocal unit references notes outside the selected range.
-
-These safeguards help prevent unrelated lyrics from becoming attached to incorrect notes.
-
----
-
-## MIDI Performance Data
-
-OSTF can store performance events alongside ordinary MIDI note data.
-
-Supported recognized event categories include:
-
-| Event | Description |
+| Target | Output |
 |---|---|
-| Control Change | MIDI controller messages |
-| Program Change | Instrument or program selection |
-| Pitch Bend | Pitch modulation |
-| Channel Pressure | Channel-wide aftertouch |
-| Polyphonic Pressure | Per-note-key pressure |
-| MIDI Channel | Channel assignment |
-| MIDI Bus | Routing-related information |
+| Synthesizer V Studio | `.svp` |
+| OpenUtau | `.ustx` |
+| UtaFormatix and compatible workflows | `.ufdata` |
 
-OSTF Editor preserves supported performance-event data independently of the standard note editor.
+### Export Steps
 
-**Preserving MIDI performance information does not mean that every MIDI event type has a dedicated visual editing control.**
+1. Load an OSTF song into File A or File B.
+2. In **Vocal Export**, select the document and the appropriate Voice or lead/chorus melody.
+3. Choose a target format.
+4. Review the export report, including any placeholder-lyrics or unsupported-data warnings.
+5. Export the file and open it in the target singing application for inspection.
 
-Likewise, Send to Live and MIDI file export may expose different subsets of the stored OSTF data.
+### Melody and Chorus Handling
 
----
+An explicit OSTF Vocal Voice with a valid track and lyric alignment is preferred. Recognized lead or other appropriate melody material can also be selected without requiring it to be a general-purpose instrumental arrangement track.
 
-## Fixed Trigger Notes
+When the target supports multiple parts and the source contains several aligned vocal parts, supported lead and chorus parts can be exported as separate target tracks or parts. The Editor should not silently collapse them into a single melody.
 
-OSTF supports notes whose pitches should remain fixed during musical transposition.
+A melody **without assigned lyrics** can be exported with **temporary placeholder syllables** (such as `la`) where required by the destination format. These placeholders are used for conversion only; they are **not written into the source OSTF document**.
 
-These notes use:
+### Export Limitations
 
-```text
-pitchRole = fixedTrigger
-```
+Vocal export is **experimental**. Exact representation of phonemes, vocal techniques, pitch curves, voice identities, and expression parameters depends on the target format and application. Some fields may need approximation or may not transfer. Review warnings and the imported result.
 
-They may represent keyswitches or other instrument-specific trigger notes.
-
-For example, when transposing by +12 semitones:
-
-```text
-Musical note: MIDI 64 → 76
-Fixed trigger: MIDI 24 → 24
-```
-
-Fixed Trigger notes are protected from normal musical transposition.
-
-They are also excluded from ordinary melody-range and lyric-pitch processing where appropriate.
+OSTF Editor does **not** include Synthesizer V, OpenUtau, voicebanks, or a singer license. Opening, singing, and rendering in the target application have not been certified by this project's automated browser tests.
 
 ---
 
-## Key and Genre Metadata
+## Compare Two OSTF Documents
 
-OSTF Editor uses standard OSTF Core fields as the authoritative source of song information.
+Load two files into **File A** and **File B** to compare supported material, including:
 
-Examples include:
+- Song structure and timeline events
+- Chords, keys, and scales
+- Melodies and lyric relationships
+- Performance and arrangement tracks
+- Drum and MIDI note data
+- Note states and supported metadata
 
-```text
-song.key
-timeline.keyChanges
-song.scale
-harmony.scales
-song.genres
-song.moods
-song.languages
-```
+Review differences before applying changes. Two-file comparison is useful when separate Arranger devices have modified different parts of the same song.
 
-Legacy or application-specific metadata is not treated as authoritative when equivalent standard OSTF fields exist.
+## Visual Merge and Track Organization
 
-Unknown metadata is retained whenever possible.
+Supported merge workflows include selected note ranges, entire tracks, melody regions, drum material, chord voicings, Key Map data, and lyric-linked melody material.
+
+For partial melody replacement, available policies can include:
+
+- **Keep Destination Vocal Lyrics:** retain destination words while changing compatible note content.
+- **Notes Only:** replace notes and disconnect incompatible lyric links while retaining lyric text.
+- **Adopt Source Vocal Lyrics:** adopt source lyrics and their supported note relationships.
+
+Operations are designed to preserve other song data and reject unsafe partial copies where required. Complex OSTF 4.x references may restrict what can be merged.
+
+**Track reordering:** drag Performance Tracks to reorganize them in supported editable documents. The resulting order is stored when saved.
+
+---
+
+## Harmony, Metadata, and Timing
+
+### Chords and Voicing
+
+Chord labels and optional structured harmonic information are maintained independently of played MIDI notes. Voicing is an optional informational pitch snapshot, useful for inspecting harmonic choices and inversions; it is not a substitute for the concrete performance tracks.
+
+### Standard Key and Genre Metadata
+
+OSTF Editor uses standard Core fields such as `song.key`, `timeline.keyChanges`, `song.scale`, `harmony.scales`, `song.genres`, `song.moods`, and `song.languages`. It avoids treating obsolete application-specific metadata as authoritative when standard fields are available.
 
 ### Key Map Merge
 
-The Key Map can be transferred independently from another OSTF document.
+A supported Key Map merge can copy the song's initial key and timed key changes without replacing unrelated tracks, chords, tempo, time signatures, lyrics, or arrangement data. PPQ conversion must be exact: positions are not silently rounded.
 
-This includes:
+### High-Resolution Timing and Pickup Notes
 
-- Initial song key
-- Timeline key changes
+Timing-sensitive operations use integer OSTF ticks. Unsupported fractional results are rejected rather than rounded without notice. Valid negative clip-local starts are preserved for pickup notes and related musical structures.
 
-The operation is designed to avoid replacing unrelated information, such as:
+### Conservative Migration
 
-- Performance tracks
-- Chord progressions
-- Tempo
-- Time signatures
-- Scale contexts
-- Lyrics
-- Arrangement material
-
-PPQ conversion must be exact.
-
-Key-change positions are not silently rounded.
+Compatible OSTF 3.4 documents may be explicitly migrated to 3.5. Migration does not invent note-state values, and it can be undone before saving. No automatic forced upgrade to 4.x is performed.
 
 ---
 
-## High-Resolution Timing
+## Undo / Redo
 
-OSTF supports high PPQ values.
-
-OSTF Editor uses integer OSTF ticks for timing-sensitive editing operations rather than relying exclusively on rounded quarter-note values.
-
-This helps preserve the timing accuracy of high-resolution song data.
-
-When a timing conversion cannot be represented exactly, an operation may be rejected instead of silently rounding the result.
-
-### Pickup Notes
-
-OSTF supports certain notes whose local start position is negative.
-
-These may represent pickup notes or related musical structures.
-
-Valid negative clip-local note starts are preserved during supported editing and merge operations.
+Document-level Undo and Redo cover supported editing operations, such as note changes, Visual Merge, melody replacement, Key Map replacement, track reordering, and migration. A logical editing operation is generally grouped into a single history step where supported.
 
 ---
 
-## OSTF 3.4 to 3.5 Migration
+## MIDI Export and Send to Ableton Live
 
-OSTF Editor retains its conservative migration workflow for compatible OSTF 3.4 files.
+**Export MIDI File** saves supported musical note and MIDI-performance information to a Standard MIDI File. MIDI export and OSTF saving serve different purposes: not every OSTF field has an SMF equivalent.
 
-Migration does not invent OSTF 3.5 note-state values.
+**Send to Live** can send supported note selections, time ranges, entire tracks, or stored chord voicings to a destination MIDI track in Live, with Session or Arrangement clip workflows where supported. Compatible attributes may include probability, velocity deviation, release velocity, and enabled/mute state.
 
-Existing musical data is preserved, and only the supported format upgrade is applied.
+Send to Live does not automatically modify the original OSTF document. For complete song-information preservation, keep the `.ostf` file.
 
-Migration operations can be undone before saving.
+### Sound Source Selection
 
-Older documents are not automatically converted into OSTF 4.0 or 4.1.
-
----
-
-## Undo and Redo
-
-OSTF Editor provides document-level Undo and Redo for supported editing operations.
-
-Examples include:
-
-- Note editing
-- Visual Merge
-- Melody replacement
-- Key Map replacement
-- OSTF migration
-- Track adoption
-- Track reordering
-
-Operations are grouped so that a logical edit can usually be undone as a single action.
+The track sound-selection interface provides internal GM preview choices and access to the established Live MIDI workflow. **The current Editor does not independently host a separate VST/AU instrument for every OSTF track inside its Max for Live window.** External instruments must be configured through a compatible routing or host workflow; a sound-selector UI alone is not a multitrack plugin host.
 
 ---
 
-## Send to Ableton Live
+## Safe Data Preservation
 
-OSTF Editor can send selected OSTF note material to an existing Ableton Live MIDI track.
+The Editor prioritizes non-destructive handling and conservative interchange:
 
-Supported source scopes include:
+- Preserve standard and unfamiliar OSTF fields whenever possible.
+- Retain MIDI channels, CC, Program Change, Pitch Bend, and Aftertouch data when supported.
+- Preserve multiple melodies, lyric units, Voice references, and note alignments.
+- Preserve authored phonetics and Vocal Performance data without silently replacing it.
+- Preserve original OSTF versions, exact timing, and unrelated song metadata.
+- Do not invent missing musical or vocal content during ordinary file editing.
+- Refuse unsafe editing/import operations rather than corrupting the document silently.
 
-- Selected notes
-- Selected time range
-- Entire track
-- Stored chord voicing
-
-Depending on the operation, MIDI clips can be created in:
-
-- Session View
-- Arrangement View
-
-Supported note attributes may include:
-
-- Probability
-- Velocity deviation
-- Release velocity
-- Enabled/mute state
-
-Sending material to Ableton Live does not automatically modify the original OSTF document.
-
-### MIDI Export
-
-OSTF Editor also provides MIDI file export.
-
-MIDI export is separate from OSTF document saving.
-
-Some OSTF structures do not have direct equivalents in Standard MIDI Files.
-
-For long-term preservation of complete song data, save the OSTF document in addition to exporting MIDI.
-
----
-
-## Data Preservation and Protected Editing
-
-Preserving the original OSTF data is a primary design goal.
-
-The Editor aims to protect:
-
-- Unknown or unsupported fields
-- Standard performance-event information
-- Multiple melody relationships
-- Vocal and lyric references
-- Exact timing
-- Original OSTF version
-- Unrelated track data
-- Song metadata
-- Arrangement relationships
-
-This is especially important when OSTF Editor is used as a central integration point between multiple devices.
-
-### Protected Documents
-
-Some documents may be opened in protected mode.
-
-Protection may be applied when:
-
-- The document contains structures beyond the supported editing scope
-- An operation cannot safely preserve existing references
-- Numerical values cannot be represented safely
-- A format conversion would require unsupported transformations
-
-Protected documents can still be inspected and used in supported non-destructive workflows.
-
-Not every visual editing command is available for every OSTF version.
+**Visibility is not deprecation.** The Editor exposes multiple technical views because different OSTF tools may depend on them. A lane being hidden or unused does not mean its underlying Core field is deprecated. No lyric field is declared deprecated by this README.
 
 ---
 
 ## Current Limitations
 
-OSTF Editor v2.1 focuses on text exchange, document inspection, comparison, editing, merge, and safe data handling.
+- Complete visual authoring and merging of all OSTF 4.1/4.2 structures are not yet available.
+- The Vocal Expression viewer is read-only; editing individual vocal-expression curves and events is a future enhancement.
+- Vocal exports to SVP/USTX/UFDATA are experimental and need inspection in the destination application.
+- Existing Live MIDI clips are not yet directly captured into a new OSTF Performance Track by the Editor.
+- Full cross-track chord/scale/harmony validation remains a future capability.
+- Whole-song time insertion/deletion across all related tracks, lyrics, and directions is not yet a completed workflow.
+- Independent in-device hosting of a VST/AU for each OSTF track is not implemented.
+- File loading and editor-window startup behavior should be checked in your actual Live/Max environment; browser-level tests do not guarantee host behavior.
+- No macOS runtime verification is claimed for this release.
 
-Some features remain outside the current release.
-
-### OSTF 4.1 Editing
-
-OSTF 4.1 documents support schema-aware text handling and preservation.
-
-Full editing of all OSTF 4.1 structures, including advanced Track Directions, is not yet implemented.
-
-### Live MIDI Import
-
-Directly capturing existing Ableton Live MIDI clips into a new OSTF Performance Track is not included in v2.1.
-
-The existing Send to Live functionality is a separate workflow.
-
-### Advanced Harmony Validation
-
-Comprehensive cross-track musical validation against chord tones, scales, and playing ranges is not yet available as a complete editing system.
-
-### Whole-Song Time Editing
-
-Automatic insertion or deletion of time across every song track, including all dependent OSTF structures, is not included as a complete workflow in v2.1.
-
-### Automatic Music Generation
-
-OSTF Editor is not intended to replace specialized composition and arrangement devices.
-
-The following functions remain better suited to dedicated tools:
-
-- Automatic chord progression generation
-- Automatic melody generation
-- Drum pattern generation
-- Bass pattern generation
-- Sequence generation
-- Automatic phrase regeneration
-- Instrument-specific performance generation
+OSTF Editor is **not** an automatic melody, chord-progression, drum, bass, or sequence generator. Those tasks remain the responsibility of the specialized OSTF devices.
 
 ---
 
-## Typical Workflow
+## Typical OSTF Workflow
 
-A common OSTF Editor workflow is:
+1. Build the song structure and harmony with OSTF Composer.
+2. Generate or edit appropriate parts in Song Writer and the specialized Arrangers.
+3. Load the resulting OSTF documents in Editor through files or OSTF TEXT.
+4. Compare File A and File B and review differences.
+5. Merge supported tracks or ranges, resolve warnings, and arrange track order.
+6. Inspect lyrics, note alignments, MIDI properties, and any authored vocal expression.
+7. Save the integrated `.ostf` file.
+8. Optionally export `.mid`, `.svp`, `.ustx`, or `.ufdata` as needed.
 
-1. Open the main OSTF song in File B.
-2. Open another OSTF document in File A.
-3. Alternatively, import either document through OSTF TEXT.
-4. Compare the two song timelines.
-5. Select a track or musical range.
-6. Review the differences.
-7. Choose supported material to merge.
-8. Resolve dependency or lyric warnings if necessary.
-9. Apply the merge.
-10. Reorder Performance Tracks if required.
-11. Inspect the combined song.
-12. Save the updated OSTF document.
-
-This makes OSTF Editor useful when integrating material created by multiple OSTF-compatible devices.
-
----
-
-## Role in the OSTF Ecosystem
-
-OSTF Editor is designed primarily as a **song-level comparison, correction, merge, organization, and management environment**.
-
-Specialized OSTF devices focus on musical generation and instrument-specific editing.
-
-OSTF Editor provides a central location to inspect and integrate those results.
-
-Example ecosystem:
-
-```text
-                 OSTF Composer
-                       |
-              OSTF Song Structure
-                       |
-          +------------+------------+
-          |            |            |
-      Song Writer  Drum Arranger  Bass Arranger
-          |            |            |
-          +------------+------------+
-                       |
-                Sequence Arranger
-                       |
-                 Other OSTF Tools
-                       |
-                       v
-                  OSTF Editor
-                       |
-        Compare / Inspect / Merge / Edit
-                       |
-                       v
-              Combined OSTF Song
-```
-
-This diagram represents a conceptual workflow rather than a mandatory processing order.
-
-OSTF documents can be exchanged in different sequences depending on the project.
-
-The Editor is not intended to replace specialized Arranger devices.
-
-Instead, it serves as a central environment for managing the complete song document.
+This is one possible workflow, not a mandatory sequence. The Editor acts as the integration and inspection environment for the complete OSTF song.
 
 ---
 
 ## Requirements
 
-- Ableton Live
-- Max for Live
-- A compatible OSTF file for document-based workflows
+- Ableton Live with Max for Live (developed primarily around Live 12)
+- A compatible `.ostf` file for document-based workflows
+- `OSTF_Editor_v2.2.amxd`
 
-The device is distributed as:
-
-```text
-OSTF_Editor_v2.1.amxd
-```
-
-OSTF Editor is a Max for Live MIDI device.
-
----
-
-## Installation
-
-1. Download `OSTF_Editor_v2.1.amxd`.
-2. Copy the file to your preferred Max for Live device folder.
-3. Open Ableton Live.
-4. Drag OSTF Editor onto a MIDI track.
-5. Open the Editor window.
-6. Open an OSTF file or use OSTF TEXT to import a document.
-
-No conversion to MIDI is required to open an OSTF document in the Editor.
+This release's audio-effect workflow is intended for use on a compatible audio track. MIDI export and Send to Live are separate features; the device should not be confused with a general multitrack VST instrument host.
 
 ---
 
 ## Open Song Timeline Format
 
-OSTF Editor is built around the **Open Song Timeline Format**, an open text-based format for structured musical information.
+OSTF is an open, text-based format for structured song information: structure, harmony, melodies, lyrics, MIDI performance, tracks, and supported vocal-expression data.
 
-OSTF can represent song structure, harmony, melodies, lyrics, instrument parts, and supported MIDI performance information.
+- OSTF 4.0: https://github.com/yoh-nak/Open-Song-Timeline-Format-4.0
+- OSTF 3.5: https://github.com/yoh-nak/Open-Song-Timeline-Format-3.5
 
-### OSTF 4.0
-
-https://github.com/yoh-nak/Open-Song-Timeline-Format-4.0
-
-### OSTF 3.5
-
-https://github.com/yoh-nak/Open-Song-Timeline-Format-3.5
-
-Earlier OSTF versions remain relevant for backward compatibility.
-
-OSTF 4.1 compatibility in Editor v2.1 focuses on schema-aware text exchange and protected handling of newer document structures.
+The newer 4.1/4.2 specifications build on the earlier Core data model rather than replacing traditional MIDI note and harmony structures.
 
 ---
 
 ## Version History
 
-### v2.1 — Official Release
+### v2.2 — Official Release
 
-**OSTF TEXT and document interoperability update**
+- OSTF 4.2 schema-aware reading and protected preservation
+- Vocal Export to SVP, USTX, and UFDATA
+- Recognized lead/chorus material and temporary placeholder lyrics for lyric-free melodies
+- Improved written lyrics, pronunciation, phonetics, and note-aligned syllable views
+- Vocal Expression curves and timed-event visualization (read-only)
+- Configurable Global Timeline lanes, row/clip resizing, and Scale Contexts layout fixes
+- Loading feedback for Open and drag-and-drop workflows
+- Sound-selection interface and startup/UI stability refinements
+- Existing OSTF TEXT, compare/merge, MIDI export, and Send to Live retained
 
-Highlights:
+### v2.1 — OSTF TEXT Release
 
-- Introduced OSTF TEXT
-- Added formatted OSTF text display
-- Added COPY OSTF
-- Added IMPORT OSTF
-- Added File A and File B text workflows
-- Improved exchange with other OSTF-compatible devices
-- Added OSTF 4.0 and 4.1 schema-aware text validation
-- Improved invalid-import handling
-- Improved protection of existing song data
-- Preserved existing comparison and merge workflows
-- Retained MIDI output and export functionality
-- Updated official release version and metadata
+- Added view, copy, and import of OSTF JSON text
+- Added File A / File B text exchange and safer invalid-import handling
+- Added schema-aware text validation for OSTF 4.0 and 4.1
+- Retained visual comparison, merge, and MIDI workflows
 
-### v2.0
+### v2.0 — OSTF 4.0 and Editor Workflow Update
 
-**OSTF 4.0 and editor workflow update**
+- Added extended MIDI event and multiple-melody/vocal recognition
+- Improved comparison, Visual Merge, and vocal-link-aware melody replacement
+- Improved track reordering, Key Map merge, note-state handling, and timing preservation
+- Retained conservative migration, Undo/Redo, and Send to Live
 
-Highlights:
-
-- OSTF 3.0–4.0 compatibility
-- OSTF 4.0 document recognition and preservation
-- MIDI performance-event support
-- Control Change data preservation
-- Program Change data preservation
-- Pitch Bend data preservation
-- Channel Pressure data preservation
-- Polyphonic Pressure data preservation
-- MIDI channel and bus information
-- Multiple melody support
-- Multiple vocal and lyric relationship support
-- Visual two-file comparison
-- Visual Merge
-- Melody and vocal-link aware replacement
-- Arrangement and drum editing
-- Performance Track management
-- Improved drag-and-drop track reordering
-- OSTF 3.5 note-state handling
-- Fixed Trigger note support
-- High-PPQ timing preservation
-- Key Map Merge
-- OSTF 3.4 to 3.5 migration
-- Undo and Redo
-- Send to Ableton Live
-- Backward-compatible OSTF saving
-
-### v1.0
-
-**Initial public release**
-
-Highlights:
+### v1.0 — Initial Public Release
 
 - OSTF 3.0–3.5 compatibility
-- Visual two-file comparison
-- Visual Merge
-- Melody and lyric-aware replacement
-- Arrangement and drum editing
-- OSTF 3.5 note-state support
-- Fixed Trigger handling
-- High-resolution timing preservation
-- Key Map Merge
-- OSTF 3.4 to 3.5 migration
-- Undo and Redo
-- Send to Ableton Live
-- Backward-compatible OSTF saving
+- Visual two-file comparison and merge
+- Note, arrangement, drum, and lyrics-aware editing
+- Fixed-trigger and high-resolution timing handling
+- Key Map merge, migration, Undo/Redo, and Send to Live
 
 ---
+
+## GitHub
+
+OSTF Editor: https://github.com/yoh-nak/OSTF-Editor-M4L
+
+Author: **Yohsuke Nakano**  
+https://github.com/yoh-nak
 
 ## Support the Project
 
 OSTF Editor and the Open Song Timeline Format projects are developed independently and are available free of charge.
 
-If you find this project useful and would like to support continued development:
+**Buy Me a Coffee:** https://buymeacoffee.com/yohsukenak
 
-**Buy Me a Coffee**
-
-https://buymeacoffee.com/yohsukenak
-
-Your support helps with:
-
-- OSTF specification development
-- Max for Live device development
-- Testing and compatibility improvements
-- Documentation
-- Future updates
-
-Thank you for supporting the project.
-
----
-
-## Author
-
-**Yohsuke Nakano**
-
-GitHub:
-
-https://github.com/yoh-nak
-
----
+Support helps with continued specification work, Max for Live development, compatibility testing, documentation, and future updates.
 
 ## License
 
-Please refer to the license information included with the project and repository.
-
-When redistributing or modifying OSTF Editor, follow the terms of the applicable license.
+Refer to the license terms included in the repository. Follow the applicable terms when using, modifying, or redistributing the device.
