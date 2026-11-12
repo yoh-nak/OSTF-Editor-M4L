@@ -317,12 +317,40 @@ This release's audio-effect workflow is intended for use on a compatible audio t
 
 ## Open Song Timeline Format
 
-OSTF is an open, text-based format for structured song information: structure, harmony, melodies, lyrics, MIDI performance, tracks, and supported vocal-expression data.
+OSTF is an open, text-based interchange format for structured song information, including song structure, harmony, melodies, lyrics, instrument tracks, MIDI performance, and optional vocal-expression data.
 
-- OSTF 4.0: https://github.com/yoh-nak/Open-Song-Timeline-Format-4.0
-- OSTF 3.5: https://github.com/yoh-nak/Open-Song-Timeline-Format-3.5
+### OSTF 4.2 — Vocal Interchange and Expression
 
-The newer 4.1/4.2 specifications build on the earlier Core data model rather than replacing traditional MIDI note and harmony structures.
+OSTF 4.2 builds on OSTF 4.1 while introducing optional data for singing-synthesis workflows:
+
+- Lyric-unit phonetics, including alternate phoneme representations and pronunciations
+- Vocal Voice profiles and their associated melody/lyric relationships
+- Vocal Performance data: phoneme events, pitch curves, expression curves, vocal techniques, and breath events
+- A structured foundation for external conversion to formats such as Synthesizer V (`.svp`), OpenUtau (`.ustx`), and UtaFormatix (`.ufdata`)
+
+OSTF 4.2 does **not** turn every melody track into a vocal track. Ordinary melodic and instrumental tracks remain valid. The Editor supports 4.2-aware document handling and experimental vocal export, but does not yet provide full visual editing of every 4.2 field.
+
+*Repository URL: to be added once the public OSTF 4.2 repository address is confirmed.*
+
+### OSTF 4.1 — Track Directions
+
+OSTF 4.1 extends OSTF 4.0 with Track Directions and instrument playable-pitch capabilities. Its musical direction data can express performance roles, improvisational intent, and pitch-range guidance without replacing concrete MIDI notes.
+
+GitHub: https://github.com/yoh-nak/Open-Song-Timeline-Format-4.1
+
+### OSTF 4.0 — MIDI Performance and Multiple Vocal Voices
+
+OSTF 4.0 standardizes extended MIDI performance information, including Control Change, Program Change, Pitch Bend, Channel/Poly Pressure, MIDI channel/bus data, and multiple melody tracks with voice-specific lyric relationships.
+
+GitHub: https://github.com/yoh-nak/Open-Song-Timeline-Format-4.0
+
+### OSTF 3.5 — Song and Note-State Interchange
+
+OSTF 3.5 provides structured song and harmony information, multi-track arrangements, lyrics, drum mapping, and note states such as probability, release velocity, and fixed-trigger behavior.
+
+GitHub: https://github.com/yoh-nak/Open-Song-Timeline-Format-3.5
+
+OSTF 4.1 and 4.2 build on the earlier Core model; they do not replace the existing chord, melody, track, and note structures. OSTF Editor may preserve newer fields even when their dedicated visual editing controls are not available.
 
 ---
 
