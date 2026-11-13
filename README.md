@@ -1,19 +1,55 @@
 # OSTF Editor for Max for Live
 
-**Version 2.2 — Official Release**  
+**Version 2.3 — Official Release**  
 **Open Song Timeline Format (OSTF) 3.0–4.2 compatibility**
 
 OSTF Editor is a free Max for Live device for **viewing, comparing, editing, merging, organizing, and preserving complete song documents** in the Open Song Timeline Format (OSTF).
 
 It serves as the song-level integration point for OSTF Composer, Song Writer, Producer, Drum Arranger, Bass Arranger, Sequence Arranger, and other compatible tools. Specialized devices focus on writing or shaping individual parts; OSTF Editor focuses on the relationships among song structure, harmony, tracks, MIDI performances, melodies, lyrics, and metadata.
 
-**Version 2.2 introduces OSTF 4.2 vocal-data compatibility, experimental vocal-software export, configurable timeline lanes, improved lyric/phonetic views, and a read-only vocal-expression viewer.** OSTF TEXT, two-file comparison, Visual Merge, and MIDI workflows remain available.
+**Version 2.3 restores the internal GM instrument and drum-kit workflow, corrects drum/percussion routing, and improves the distinctness, level, and sustain of built-in cymbal sounds.** The earlier OSTF 4.2, Vocal Export, configurable timeline, OSTF TEXT, two-file comparison, Visual Merge, and MIDI workflows remain available.
+
+**Single-file distribution:** `OSTF_Editor_v2.3.amxd` contains the preview sound engine. No separate drum JavaScript, WAV, or SoundFont files are required.
 
 > **Compatibility note:** Reading or preserving an OSTF field does not imply that every field can be edited or merged visually. Some newer documents or operations use protected handling to avoid data loss. Vocal-format exports are experimental and should be checked in the destination application.
 
 ---
 
-## What's New in v2.2
+## What's New in v2.3
+
+Version 2.3 is a **drum playback and built-in sound-source maintenance release**. It restores the simple sound selection workflow and retains all major OSTF editing capabilities from v2.2.
+
+### Internal Instrument and Drum-Kit Selection
+
+- Restore **128 General MIDI program choices** for pitched instrument preview.
+- Restore **four built-in drum-kit presets**: Electronic, Acoustic-style, Tight, and 808-style.
+- Remove the experimental selection workflow that attempted to choose instruments from other Ableton Live tracks. The track sound control once again focuses on Editor's **own internal preview sound sources**.
+- Route recognized drum and percussion notes to the dedicated drum engine instead of treating them as pitched General MIDI notes.
+- Keep sound selection separate from the authored OSTF notes, harmony, and track metadata wherever possible.
+
+### Drum and Cymbal Playback Improvements
+
+- Differentiate kick, snare, tom, hi-hat, crash, ride, bell, splash, and additional percussion preview sounds.
+- Improve the differences among the four kits through synthesized attack, tone, and decay settings.
+- Add individual audition options for **Closed / Open / Pedal Hi-Hat, Crash, Ride, Ride Bell, Splash**, and other preview hits.
+- Adjust cymbal sustain and resonance so that longer sounds are not reduced to a short click as easily.
+- Raise the relative level of cymbals and refine the fallback audio path and simultaneous-sound level handling.
+- Integrate the preview sound code and its generated buffers into **one AMXD file**. External drum scripts and samples are not needed.
+
+**Sound-quality limitation:** These are **synthesized preview sounds, not recordings of acoustic drums or cymbals**. Cymbal naturalness, kit balance, and real-host playback still have room for improvement. This is not a replacement for a dedicated sampled drum instrument.
+
+### Retained from Earlier Releases
+
+- OSTF 3.0–4.2 document compatibility and protected preservation
+- Vocal Export (SVP / USTX / UFDATA) and vocal-expression inspection
+- Configurable Global Timeline, lyric and phonetic views, Piano Roll, and MIDI parameters
+- OSTF TEXT, two-file Compare / Visual Merge, MIDI export, and Send to Live
+
+The v2.3 release incorporates the drum and cymbal changes developed through the v2.3.1 RC6 candidate. The **v2.3 version number is reused** for this updated public build; keep a backup of any earlier v2.3 device before replacing it.
+
+---
+
+## What v2.2 Introduced
 
 - **OSTF 4.2 support:** schema-aware reading, OSTF TEXT exchange, and preservation of supported vocal-specific data.
 - **Vocal Export:** experimental conversion to **Synthesizer V (`.svp`)**, **OpenUtau (`.ustx`)**, and **UtaFormatix (`.ufdata`)**.
@@ -25,7 +61,7 @@ It serves as the song-level integration point for OSTF Composer, Song Writer, Pr
 - **Vocal Expression viewer:** inspect supported curves and timed events such as dynamics, breathiness, tension, brightness, voicing, pitch, vocal techniques, breaths, and phonemes.
 - **Layout improvements:** resizing of Global Timeline rows and clips, including Scale Contexts, and better handling of melody lanes.
 - **Loading feedback:** an indicator during supported file-open and drag-and-drop import workflows.
-- **Sound-selection interface:** access to internal GM preview choices and the existing Live MIDI workflow; this is not a multitrack VST hosting system.
+- **Sound selection (v2.2):** the initial preview-source selector, subsequently simplified and restored to internal GM / drum kits in v2.3.
 - **Release cleanup:** consolidated v2.2 version labels and metadata.
 
 The v2.2 release incorporates the stability and UI fixes developed through the v2.2.1 RC5 candidate.
@@ -34,7 +70,7 @@ The v2.2 release incorporates the stability and UI fixes developed through the v
 
 ## Quick Start
 
-1. Download `OSTF_Editor_v2.2.amxd`.
+1. Download `OSTF_Editor_v2.3.amxd`.
 2. Place it in your preferred Max for Live device folder.
 3. Open Ableton Live with Max for Live and load the device onto a compatible track. The current Editor workflow uses an audio-effect device on an audio track.
 4. Open the Editor window. Use **Open** to load a `.ostf` file, or **OSTF TEXT** to paste a document.
@@ -48,7 +84,7 @@ The v2.2 release incorporates the stability and UI fixes developed through the v
 
 ## OSTF Version Compatibility
 
-| OSTF version | Scope in Editor v2.2 |
+| OSTF version | Scope in Editor v2.3 |
 |---|---|
 | 3.0–3.3 | Legacy document compatibility; available operations depend on the document |
 | 3.4 | Legacy editing and conservative 3.4-to-3.5 migration |
@@ -145,7 +181,7 @@ OSTF 4.2 can carry optional vocal-specific expression data. In the lower Paramet
 
 Curves are presented on a time axis; timed techniques, breaths, and phonemes can be shown as event lanes. The UI is deliberately **version-neutral** so that the names remain useful as OSTF evolves.
 
-**Read-only in v2.2:** the viewer does not author or synthesize vocal-expression data. If an older OSTF file has no authored expression information, the Editor reports that no data is available instead of inventing a curve. MIDI Velocity is a separate note parameter and should not be mistaken for Vocal Dynamics.
+**Read-only in v2.3:** the viewer does not author or synthesize vocal-expression data. If an older OSTF file has no authored expression information, the Editor reports that no data is available instead of inventing a curve. MIDI Velocity is a separate note parameter and should not be mistaken for Vocal Dynamics.
 
 ---
 
@@ -252,9 +288,23 @@ Document-level Undo and Redo cover supported editing operations, such as note ch
 
 Send to Live does not automatically modify the original OSTF document. For complete song-information preservation, keep the `.ostf` file.
 
-### Sound Source Selection
+### Internal Sound Source Selection (v2.3)
 
-The track sound-selection interface provides internal GM preview choices and access to the established Live MIDI workflow. **The current Editor does not independently host a separate VST/AU instrument for every OSTF track inside its Max for Live window.** External instruments must be configured through a compatible routing or host workflow; a sound-selector UI alone is not a multitrack plugin host.
+Use the track's sound/program control to choose an **internal preview instrument**:
+
+- **Pitched tracks:** choose from 128 General MIDI program names. These are preview timbres, not a full sampled GM sound library.
+- **Drum and percussion tracks:** choose one of the four built-in drum kits (Electronic, Acoustic-style, Tight, or 808-style). Drum notes use dedicated percussion synthesis and note mapping rather than pitched-instrument transposition.
+- **Audition:** use the preview controls to compare drum-kit hits and cymbal types. Longer cymbal sounds are intended to retain audible decay.
+
+The preview engine is entirely contained in the `.amxd` file. The sound choice is meant for **listening while editing**, not rewriting musical data or replacing a DAW's external instrument setup.
+
+**There is no in-Editor VST/AU host per OSTF track.** The previous selector for instruments on other Live tracks has been removed. **Send to Live** remains a separate operation for transferring MIDI notes to compatible destination tracks.
+
+### Drum Preview Audio and Limitations
+
+The Editor uses synthesized drum and cymbal sounds, including distinct treatments for kick, snare, tom, hi-hat, crash, ride, bell, splash, and other percussion events. The four kits change preview timbre, attacks and decay; they do **not** load commercial or recorded sample libraries.
+
+Longer cymbal sustain, improved relative cymbal levels, and revised playback routing are included in v2.3. Nevertheless, acoustic realism remains limited, and Live/Max audio quality must be judged in a real host. The internal preview should not be presented as a fully realistic acoustic drum instrument.
 
 ---
 
@@ -282,7 +332,8 @@ The Editor prioritizes non-destructive handling and conservative interchange:
 - Existing Live MIDI clips are not yet directly captured into a new OSTF Performance Track by the Editor.
 - Full cross-track chord/scale/harmony validation remains a future capability.
 - Whole-song time insertion/deletion across all related tracks, lyrics, and directions is not yet a completed workflow.
-- Independent in-device hosting of a VST/AU for each OSTF track is not implemented.
+- Independent in-device hosting of a VST/AU for each OSTF track is not implemented; v2.3 uses its internal GM/drum preview instead.
+- Built-in drum and cymbal sounds are synthesized previews; their realism and kit-to-kit balance may not match sampled instruments.
 - File loading and editor-window startup behavior should be checked in your actual Live/Max environment; browser-level tests do not guarantee host behavior.
 - No macOS runtime verification is claimed for this release.
 
@@ -309,7 +360,7 @@ This is one possible workflow, not a mandatory sequence. The Editor acts as the 
 
 - Ableton Live with Max for Live (developed primarily around Live 12)
 - A compatible `.ostf` file for document-based workflows
-- `OSTF_Editor_v2.2.amxd`
+- `OSTF_Editor_v2.3.amxd`
 
 This release's audio-effect workflow is intended for use on a compatible audio track. MIDI export and Send to Live are separate features; the device should not be confused with a general multitrack VST instrument host.
 
@@ -356,7 +407,22 @@ OSTF 4.1 and 4.2 build on the earlier Core model; they do not replace the existi
 
 ## Version History
 
-### v2.2 — Official Release
+### v2.3 — Internal GM / Drum Preview Restoration and Cymbal Update
+
+- Restore built-in 128-program GM preview selection for melodic/instrumental tracks
+- Restore Electronic, Acoustic-style, Tight, and 808-style drum-kit selection
+- Remove the Live-track external-instrument selection workflow
+- Correct routing of recognized drum notes to percussion rather than pitched preview voices
+- Improve differentiation of kicks, snares, toms, hi-hats, cymbals and additional percussion
+- Add or restore audition controls for open/closed/pedal hats, crash, ride, bell and splash
+- Improve cymbal level, sustain, decay, resonance and fallback routing
+- Package all preview sounds and drum playback code in a single AMXD with no external JS or WAV requirements
+- Retain OSTF 4.2 support, experimental Vocal Export, OSTF TEXT, Compare, Visual Merge and MIDI workflows
+- Release v2.3 using the RC6 playback improvements; previous v2.3 builds should be backed up before replacement
+
+**Note:** Cymbals are synthesized and may still sound less natural than recorded samples. Real-host compatibility and audio quality are not certified by structural or browser-based tests.
+
+### v2.2 — Vocal Data, Export and Timeline Update
 
 - OSTF 4.2 schema-aware reading and protected preservation
 - Vocal Export to SVP, USTX, and UFDATA
